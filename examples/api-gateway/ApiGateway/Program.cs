@@ -5,8 +5,6 @@ builder.Services.AddReverseProxy()
 
 var app = builder.Build();
 
-// app.MapGet("/", () => "Hello World!");
-
 app.MapReverseProxy();
 
 app.Run();
