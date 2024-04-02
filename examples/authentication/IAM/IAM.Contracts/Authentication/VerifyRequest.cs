@@ -1,3 +1,3 @@
 namespace IAM.Contracts.Authentication;
 
-public record VerifyRequest(string phone, string code);
+public record VerifyRequest(string code);

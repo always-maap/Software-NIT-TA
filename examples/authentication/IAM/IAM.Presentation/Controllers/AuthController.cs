@@ -1,6 +1,7 @@
 using IAM.Application.AuthenticationService;
 using IAM.Contracts.Authentication;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IAM.Presentation.Controllers;
@@ -25,9 +26,10 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("verify")]
+    [Authorize]
     public async Task<ActionResult> Verify([FromBody] VerifyRequest request)
     {
-        await _verifyService.Handle(request.phone, request.code);
+        await _verifyService.Handle(request.code);
         return Ok();
     }
 
