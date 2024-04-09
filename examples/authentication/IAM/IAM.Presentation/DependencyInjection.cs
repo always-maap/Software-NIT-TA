@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text;
 using IAM.Application.Common;
+using IAM.Infrastructure.Common;
 using IAM.Presentation.Common;
 using Mapster;
 using MapsterMapper;
@@ -36,7 +37,7 @@ public static class DependencyInjection
                 Scheme = "Bearer",
                 BearerFormat = "JWT",
                 In = ParameterLocation.Header,
-                Description = "JWT Authorization header using the Bearer scheme",
+                Description = "JWT Authorization header using the Bearer scheme. Example: Bearer 12345abcdef",
             });
 
             c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -54,13 +55,19 @@ public static class DependencyInjection
                 }
             });
         });
-        
+
         return services;
     }
 
     private static IServiceCollection AddAuth(this IServiceCollection services)
     {
-        
+        var jwtSettings = new JwtSettings
+        {
+            Secret = "85y/7XbloWlrVQuIFLFRyOxH67sL5UPNjJoleFbXfz0=",
+            Issuer = "http://localhost:5000",
+            Audience = "http://localhost:5000",
+            ExpiryMinutes = 60 * 24 * 30
+        };
         services.AddAuthentication()
             .AddJwtBearer(options =>
             {
@@ -70,22 +77,23 @@ public static class DependencyInjection
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "http://localhost:5000",
-                    ValidAudience = "http://localhost:5000",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("85y/7XbloWlrVQuIFLFRyOxH67sL5UPNjJoleFbXfz0="))
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidAudience = jwtSettings.Audience,
+                    IssuerSigningKey =
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
                 };
             });
 
         return services;
     }
-    
+
     private static IServiceCollection AddCurrentUser(this IServiceCollection services)
     {
         services.AddSingleton<ICurrentUser, CurrentUser>();
 
         return services;
     }
-    
+
     private static IServiceCollection AddMapper(this IServiceCollection services)
     {
         var config = TypeAdapterConfig.GlobalSettings;
@@ -93,7 +101,7 @@ public static class DependencyInjection
 
         services.AddSingleton(config);
         services.AddScoped<IMapper, ServiceMapper>();
-        
+
         return services;
     }
 }

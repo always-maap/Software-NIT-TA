@@ -15,11 +15,11 @@ public class CurrentUser : ICurrentUser
 
     public string GetUserPhone()
     {
-        return _contextAccessor.HttpContext.User.FindFirstValue(JwtStandardClaims.PhoneNumber);
+        return _contextAccessor.HttpContext?.User.FindFirstValue(JwtStandardClaims.PhoneNumber) ?? string.Empty;
     }
 
     public bool IsUserAuthenticated()
     {
-        return _contextAccessor.HttpContext.User.Identity?.IsAuthenticated ?? false;
+        return _contextAccessor.HttpContext?.User.Identity?.IsAuthenticated ?? false;
     }
 }

@@ -24,7 +24,6 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
     public string GenerateToken(User user)
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
         // openssl rand -base64 32
         var signingKey = new SigningCredentials(
             new SymmetricSecurityKey(
