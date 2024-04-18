@@ -1,8 +1,8 @@
 using IAM.Application.Common;
-using IAM.Infrastructure.Cache.Redis.VerifyCode;
+using IAM.Infrastructure.Cache_Redis.VerifyCode;
 using IAM.Infrastructure.Common;
-using IAM.Infrastructure.Persistence.PgSql;
-using IAM.Infrastructure.Persistence.PgSql.Repositories;
+using IAM.Infrastructure.Persistence_PgSql;
+using IAM.Infrastructure.Persistence_PgSql.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -24,7 +24,7 @@ public static class DependencyInjection
     {
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql("Host=localhost;Database=iam;Username=postgres;Password=postgres"));
-        
+
         services.AddScoped<IUserRepository, UserRepository>();
 
         return services;

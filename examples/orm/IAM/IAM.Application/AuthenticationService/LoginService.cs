@@ -16,10 +16,10 @@ public class LoginService : ILoginService
         _passwordHasher = passwordHasher;
     }
 
-    public AuthenticationResult Handle(string phone, string password)
+    public async Task<AuthenticationResult> Handle(string phone, string password)
     {
         // check if exists
-        var existingUser = _userRepository.GetByPhone(phone);
+        var existingUser = await _userRepository.GetByPhone(phone);
         if (existingUser is null)
         {
             throw new Exception("User not found");

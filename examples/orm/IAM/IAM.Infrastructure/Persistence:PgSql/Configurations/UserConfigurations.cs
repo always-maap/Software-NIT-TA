@@ -2,7 +2,7 @@ using IAM.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace IAM.Infrastructure.Persistence.PgSql.Configurations;
+namespace IAM.Infrastructure.Persistence_PgSql.Configurations;
 
 public class UserConfigurations : IEntityTypeConfiguration<User>
 {
@@ -10,36 +10,28 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
     {
         builder
             .ToTable("Users");
-        
+
         builder
             .HasKey(u => u.Id);
-        
+
         builder
             .Property(u => u.Id)
-            .ValueGeneratedOnAdd();
-        
+            .IsRequired();
+
         builder
             .Property(u => u.FirstName)
-            .IsRequired()
             .HasMaxLength(50);
-        
+
         builder
             .Property(u => u.LastName)
-            .IsRequired()
             .HasMaxLength(50);
         
         builder
             .Property(u => u.Phone)
             .IsRequired()
             .HasMaxLength(20);
-        
+
         builder
-            .Property(u => u.Password)
-            .IsRequired()
-            .HasMaxLength(100);
-        
-        builder
-            .Property(u => u.IsVerified)
-            .IsRequired();
+            .Property(u => u.IsVerified);
     }
 }
