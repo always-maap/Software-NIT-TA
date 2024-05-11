@@ -4,7 +4,7 @@ namespace IAM.Application.Common;
 
 public interface IUserRepository
 {
-    void Add(User user);
-    void Update(User user);
-    User? GetByPhone(string phone);
+    Task Add(User user);
+    Task Update(User user);
+    Task<User?> GetByPhone(string phone);
 }

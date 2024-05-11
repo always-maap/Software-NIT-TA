@@ -2,5 +2,5 @@ namespace IAM.Application.AuthenticationService;
 
 public interface ILoginService
 {
-    AuthenticationResult Handle(string phone, string password);
+    Task<AuthenticationResult> Handle(string phone, string password);
 }

@@ -24,7 +24,7 @@ public class RegisterService : IRegisterService
     public async Task<AuthenticationResult> Handle(string firstName, string lastName, string phone, string password)
     {
         // check if user exists
-        if (_userRepository.GetByPhone(phone) is not null)
+        if (await _userRepository.GetByPhone(phone) is not null)
         {
             throw new Exception("User already exists");
         }
@@ -33,7 +33,7 @@ public class RegisterService : IRegisterService
         var user = User.Create(firstName, lastName, phone, _passwordHasher.HashPassword(password));
 
         // add user to database
-        _userRepository.Add(user);
+        await _userRepository.Add(user);
 
         // create token
         var token = _jwtTokenGenerator.GenerateToken(user);

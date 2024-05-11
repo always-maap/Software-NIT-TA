@@ -1,7 +1,7 @@
 using IAM.Application.Common;
 using StackExchange.Redis;
 
-namespace IAM.Infrastructure.Cache.Redis.VerifyCode;
+namespace IAM.Infrastructure.Cache_Redis.VerifyCode;
 
 public class VerifyCodeCacheProvider : IVerifyCodeCacheProvider
 {

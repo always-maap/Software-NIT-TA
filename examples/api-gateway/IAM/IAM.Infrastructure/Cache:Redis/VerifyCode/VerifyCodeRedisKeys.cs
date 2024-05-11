@@ -1,4 +1,4 @@
-namespace IAM.Infrastructure.Cache.Redis.VerifyCode;
+namespace IAM.Infrastructure.Cache_Redis.VerifyCode;
 
 public static class VerifyCodeRedisKeys
 {
